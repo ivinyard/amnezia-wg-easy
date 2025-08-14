@@ -17,4 +17,11 @@ services:
       - net.ipv4.ip_forward=1
       - net.ipv4.conf.all.src_valid_mark=1
     devices:
-    - /dev/net/tun:/dev/net/tun
+      - /dev/net/tun:/dev/net/tun
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.amnezia-wg.rule=Host(`your-domain.com`)"
+      - "traefik.http.routers.amnezia-wg.entrypoints=web"
+      - "traefik.http.services.amnezia-wg.loadbalancer.server.port=51821"
+      - "traefik.http.routers.amnezia-wg.tls=true"
+      - "traefik.http.routers.amnezia-wg.tls.certresolver=letsencrypt"
